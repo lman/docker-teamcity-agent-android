@@ -17,8 +17,13 @@ RUN curl -o /root/lets-encrypt.der https://letsencrypt.org/certs/lets-encrypt-x3
     -noprompt -importcert -alias lets-encrypt-x3-cross-signed -file /root/lets-encrypt.der \
  && rm /root/lets-encrypt.der
 
-# Install Android command line tools and extra repos
+# Install Android command line tools
 RUN curl https://dl.google.com/android/android-sdk_r${ANDROID_SDK_TOOLS_REVISION}-linux.tgz | tar xz -C /opt \
- && chown -R $USER:$USER $ANDROID_HOME \
- && echo y | sudo -u $USER $ANDROID_HOME/tools/android update sdk --no-ui --all --filter \
+ && chown -R $USER:$USER $ANDROID_HOME
+
+# Install Android licenses to not accept them manually during builds
+ADD licenses.tar.gz $ANDROID_HOME/
+
+# Install Android extra repos
+RUN echo y | sudo -u $USER $ANDROID_HOME/tools/android update sdk --no-ui --all --filter \
     extra-android-m2repository,extra-google-m2repository
