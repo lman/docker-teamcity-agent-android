@@ -7,6 +7,8 @@ ENV ANDROID_SDK_TOOLS_REVISION 24.4.1
 
 # Prepare the build agent to start as the buildagent user
 RUN apt-get install --no-install-recommends -y sudo git git-crypt \
+    # required to build/install fastlane
+    ruby2.2 ruby2.2-dev g++ make \
  && chown -R $USER:$USER /opt/buildagent \
  && sed -i 's/${AGENT_DIST}\/bin\/agent.sh start/sudo -Eu buildagent ${AGENT_DIST}\/bin\/agent.sh start/' \
     /run-agent.sh
@@ -27,3 +29,6 @@ ADD licenses.tar.gz $ANDROID_HOME/
 # Install Android extra repos
 RUN echo y | sudo -u $USER $ANDROID_HOME/tools/android update sdk --no-ui --all --filter \
     extra-android-m2repository,extra-google-m2repository
+
+# Install fastlane
+RUN gem2.2 install fastlane -NV
