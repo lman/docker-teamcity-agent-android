@@ -34,6 +34,6 @@ RUN echo y | gosu $USER $ANDROID_HOME/tools/android update sdk --no-ui --all --f
     extra-android-m2repository,extra-google-m2repository
 
 # Install fastlane
-RUN gosu $USER gem install --user-install fastlane -NV
+RUN gosu $USER gem install --no-document --user-install fastlane
 
 ENV PATH $HOME/.gem/ruby/2.3.0/bin:$PATH
