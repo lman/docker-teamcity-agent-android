@@ -5,6 +5,8 @@ ENV USER buildagent
 ENV HOME /home/$USER
 ENV ANDROID_HOME /opt/android-sdk-linux
 ENV ANDROID_SDK_TOOLS_REVISION 24.4.1
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
 
 # Prepare the build agent to start as the buildagent user
 RUN apt-get install --no-install-recommends -y git git-crypt \
